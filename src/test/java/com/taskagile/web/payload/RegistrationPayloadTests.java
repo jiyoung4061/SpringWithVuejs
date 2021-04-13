@@ -13,17 +13,20 @@ import org.junit.Test;
 
 import static org.junit.Assert.assertEquals;
 
+// 데이터 검증 수행
 public class RegistrationPayloadTests {
   private Validator validator;
 
+  // @Before : 각 테스트 메소드가 실행되기전에 수행됨(Jest의 beforeEach())
   @Before
   public void setup() {
     ValidatorFactory factory = Validation.buildDefaultValidatorFactory();
-    validator = factory.getValidator();
+    validator = factory.getValidator(); // validator 인스턴스 생성
   }
 
   @Test
   public void validate_blankPayload_shouldFail() {
+    // 비어있는 회원가입 폼을 테스트하며 3개의 제약조건이 실패할 것으로 예상
     RegistrationPayload payload = new RegistrationPayload();
 
     Set<ConstraintViolation<RegistrationPayload>> violations = validator.validate(payload);

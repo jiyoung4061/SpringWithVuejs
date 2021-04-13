@@ -1,6 +1,7 @@
 package com.taskagile.domain.application.commands;
 
 public class RegistrationCommand {
+  // 읽기 전용으로 생성 후 상태변경 불가능
   private String username;
   private String emailAddress;
   private String password;

@@ -6,7 +6,9 @@ import javax.validation.constraints.Size;
 
 import com.taskagile.domain.application.commands.RegistrationCommand;
 
+// 필드의 제약조건 정의
 public class RegistrationPayload {
+  // @Size가 null값을 유효한 값으로 인정해줌 => @NotNull 필수!
   @Size(min=2, max=50, message="Username must be between 2 and 50 characters")
   @NotNull
   private String username;

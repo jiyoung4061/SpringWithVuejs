@@ -33,7 +33,7 @@ public class RegistrationApiControllerTests {
   @Test
   public void register_blankPayload_shouldFailAndReturn400() throws Exception {
     mvc.perform(post("/api/registrations"))
-      .andExpect(status().is(400));
+      .andExpect(status().is(400)); // 잘못된 요청
   }
 
   @Test
@@ -43,6 +43,7 @@ public class RegistrationApiControllerTests {
     payload.setEmailAddress("test@taskagile.com");
     payload.setPassword("MyPassword!");
 
+    // serviceMock은 register()가 호출될 때, RegistrationException을 던진다.
     doThrow(UsernameExistsException.class)
       .when(serviceMock)
       .register(payload.toCommand());
@@ -81,6 +82,7 @@ public class RegistrationApiControllerTests {
     payload.setEmailAddress("sunny@taskagile.com");
     payload.setPassword("MyPassword!");
 
+    // doNothing : 메소드 반환값이 void이고 회원가입성공시 아무런 예외도 발생하지 않기 때문에 쓰임
     doNothing().when(serviceMock)
       .register(payload.toCommand());
 
