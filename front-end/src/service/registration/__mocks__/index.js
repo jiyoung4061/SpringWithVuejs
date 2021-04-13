@@ -7,7 +7,7 @@ export default {
           => 프로미스를 반환해 미래의 어떤 시점에 결과(resolve:이행 / reject:거절)를 제공한다.
        */
 
-       detail.emailAddress === 'sunny@local'
+       detail.emailAddress === 'sunny@taskagile.com'
         ? resolve({result: 'success'})
         : reject(new Error('User already exist'))
      })

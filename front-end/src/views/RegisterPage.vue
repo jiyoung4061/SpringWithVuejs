@@ -7,7 +7,7 @@
           <div class="tagline">Open source task management tool</div>
         </div>
         <form @submit.prevent="submitForm">
-          <div v-show="errorMessage" class="alert alert-danger failed">{{errorMessage}}</div>
+          <div v-show="errorMessage" class="alert alert-danger failed">{{ errorMessage }}</div>
           <div class="form-group">
             <label for="username">Username</label>
             <input type="text" class="form-control" id="username" v-model="form.username">
@@ -40,25 +40,52 @@
 
 <script>
 import registrationService from '@/service/registration'
+import { required, email, minLength, maxLength, alphaNum } from 'vuelidate/lib/validators'
 
 export default {
   name:'RegisterPage',
   data: function () {
     return {
       form: {
-        username:'',
-        emailAddress:'',
-        password:''
+        username: '',
+        emailAddress: '',
+        password: ''
       },
       errorMessage: ''
+    }
+  },
+  validations: { // 각 필드의 규칙 명시
+    form: {
+      username: {
+        required,
+        minLength: minLength(2),
+        maxLength: maxLength(50),
+        alphaNum
+      },
+      emailAddress: {
+        required,
+        email,
+        maxLength: maxLength(100)
+      },
+      password: {
+        required,
+        minLength: minLength(6),
+        maxLength: maxLength(30)
+      }
     }
   },
   methods: {
     submitForm(){
       // TODO : 데이터 검증하기
-      registrationService.register(this.form).then(()=>{
-        this.$router.push({name:'LoginPage'})}).catch((error) => {
-          this.errorMessage = 'Failed to register user. Reason: ' + (error.message ? error.message : 'Unknown') + '.'
+      // this.$v : 검증에대한 현재 상태를 가짐
+      this.$v.$touch() // 검증 시작
+      if(this.$v.$invalid) { // 결과 확인, 검증 실패시 invalid값은 true 회원가입 프로세스 중단
+        return
+      }
+      registrationService.register(this.form).then(() => {
+        this.$router.push({name: 'LoginPage'})
+      }).catch((error) => {
+        this.errorMessage = 'Failed to register user. ' + error.message
       })
     }
   }

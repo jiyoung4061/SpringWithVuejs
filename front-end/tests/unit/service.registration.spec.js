@@ -2,18 +2,17 @@ import moxios from 'moxios'
 import registrationService from '@/service/registration'
 
 describe('service/registration', ()=>{
-  beforeEach(()=>{
-    moxios.install() // 목 생성
+  beforeEach(() => {
     // 목 : test를 하기위해 만든 가짜 객체
+    moxios.install()
   })
 
-  afterEach(()=>{
-    moxios.uninstall() // 목 제거
+  afterEach(() => {
+    moxios.uninstall()
   })
 
   it('should pass the response to caller when request succeeded', ()=>{
-    expect.assertions(2) // assertion이 호출되는 횟수 검증
-
+    expect.assertions(2)
     // 목 요청이 만들어질 때까지 기다린다.
     moxios.wait(()=>{
       let request = moxios.requests.mostRecent() // 가장 최근 요청을 가져오고
@@ -40,10 +39,9 @@ describe('service/registration', ()=>{
         response: {message:'Bad Request'}
       })
     })
-
     return registrationService.register().catch(error => {
       expect(error.response.message).toEqual('Bad Request')
     })
   })
-  
+
 })
