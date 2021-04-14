@@ -1,5 +1,6 @@
 <template>
   <div id="app">
+    <!-- router.js에 설정된 컴포넌트들을 렌더링함 -->
     <router-view/>
   </div>
 </template>

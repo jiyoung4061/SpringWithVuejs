@@ -8,6 +8,7 @@ import Vuelidate from 'vuelidate'
 // Bootstrap axios
 axios.defaults.baseURL = '/api'
 axios.defaults.headers.common.Accept = 'application/json'
+
 axios.interceptors.response.use(
   response => response,
   (error) => {
